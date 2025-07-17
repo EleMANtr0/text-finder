@@ -1,5 +1,4 @@
 from pathlib import Path
-from collections import defaultdict
 
 class Searcher:
     def __init__(self, directory: str = "", suffix: str = ".txt"):
