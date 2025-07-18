@@ -64,7 +64,7 @@ class Interactor(tk.Tk):
             self.open_button.state(["disabled"])
 
     def search_button(self):
-        self.found_line = self.searcher.search1(self.s.get())
+        self.found_line = self.searcher.search(self.s.get())
         self.label_update(self.found_line)
         self.update_count()
         self.set_open_state(self.found_line.line)

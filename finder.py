@@ -32,23 +32,6 @@ class Searcher:
 
     def search(self, text: str):
         self.found.clear()
-        found = defaultdict(list)
-        for file_path in self.file_list:
-            file = file_path.read_text(encoding="UTF-8")
-            if text not in file:
-                found[file_path].append("no matches found")
-                continue
-            else:
-                for j in range(len(lines := file.splitlines())):
-                    if text in lines[j]:
-                        found[file_path].append(j+1)
-        for k, v in found.items():
-            for item in v:
-                self.found.append((k, item))
-
-        return self.found[0]
-    def search1(self, text: str):
-        self.found.clear()
         for file_path in self.file_list:
             file = file_path.read_text(encoding="UTF-8")
             lines = file.splitlines()
