@@ -1,4 +1,5 @@
 from pathlib import Path
+from collections import defaultdict
 
 class Searcher:
     def __init__(self, directory: str = "", suffix: str = ".txt"):
@@ -25,43 +26,23 @@ class Searcher:
     def __iter__(self):
         return self.file_list
 
-    def clear(self):
-        self.match = Match()
-
-    def read_str(self, file_name: str):
-        if file_name in self.file_set:
-            return Path(file_name).read_text(encoding="UTF-8")
-        else:
-            return None
-
-    def read_all(self) -> list[str]:
-        content = []
-        for file in self.file_list:
-            content.append(file.read_text())
-        return content
-
-    def search(self, text: str, name: str = None):
+    def search(self, text: str):
         found = defaultdict(list)
-        if not name:
-            for file_path in self.file_list:
-                file = file_path.read_text(encoding="UTF-8")
-                if text not in file:
-                    found[file_path].append("no matches found")
-                    continue
-                else:
-                    for j in range(len(lines := file.splitlines())):
-                        if text in lines[j]:
-                            found[file_path].append(j+1)
-        elif name:
-            if text not in (content := self.read_str(name)):
-                found[name].append(f"no matches found")
+        for file_path in self.file_list:
+            file = file_path.read_text(encoding="UTF-8")
+            if text not in file:
+                found[file_path].append("no matches found")
+                continue
             else:
-                for j in range(len(lines := content.splitlines())):
+                for j in range(len(lines := file.splitlines())):
                     if text in lines[j]:
-                        found[name].append(j)
+                        found[file_path].append(j+1)
         self.match = Match(found)
         self.genf = self.match.move_f()
         self.genb = self.match.move_b()
+
+    def init_direction(self, direction):
+        self.match.cache = direction
 
     def next(self):
         return next(self.genf)
