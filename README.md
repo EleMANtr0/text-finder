@@ -1,1 +1,3 @@
-# text-finder
+this project was made just for skill reinforcement. It doesnt do anything hard - just a full directory text searcher. Sounds useful, but to be honest not much people would need this special case script. It also has simple gui for testing that it works. Firstly i tried using generators which led to bugs and made initializer of classes not only initialize classes, but do some random additional work that was unnecessary.
+
+So the thing i learned doing this project: dont overcomplicate, make code readable, use dunder methods for their real purpose, generators are made to compute values when called for memory and speed management, not to iterate through predefined/precomputed data 
